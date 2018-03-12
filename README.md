@@ -44,7 +44,7 @@ The first filename is produced by URL Encoding the querystring and replacing % w
 
 The same pattern applies to POST requests, except that Moxie will look for these in response/post.
 
-###Simulating CGI-like Processors
+### Simulating CGI-like Processors
 
 If Moxie finds a file in the response folder, it will open it and look for a "processor" property. If it finds this, it will take the value of this as a type name, and instantiate that type. Moxie assumes the type inherits from RequestHandler, and it will use it to process the request. There are two examples of this in the code.
 
