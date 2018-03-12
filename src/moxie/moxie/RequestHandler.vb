@@ -3,6 +3,7 @@ Imports System.Net
 Imports Newtonsoft.Json.Linq
 Imports System.Configuration
 Imports System.Reflection
+Imports System.Web
 
 Public Interface IRequestHandler
     Sub ProcessRequest()
@@ -126,8 +127,11 @@ Public MustInherit Class RequestHandler
         Dim pathAsWindows = LocalPath.Replace("/", "\")
 
         If Context.Request.Url.Query <> "" Then
-            If File.Exists(seekable(pathAsWindows & "\" & Context.Request.Url.Query)) Then
-                Return seekable(pathAsWindows & "\" & Context.Request.Url.Query)
+
+            Dim query As String = HttpUtility.UrlEncode(Context.Request.Url.Query)
+            query = query.Replace("%", "@")
+            If File.Exists(seekable(pathAsWindows & query)) Then
+                Return seekable(pathAsWindows & query)
             End If
         End If
 

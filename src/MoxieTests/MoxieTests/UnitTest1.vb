@@ -15,6 +15,10 @@ Imports Newtonsoft.Json.Linq
         Dim doc As JObject = Ajax.MakeApiRequest("examples/eg1", Ajax.Methods.GET)
         Assert.AreEqual("Example JSON Document", doc("content").Value(Of String))
     End Sub
+    <TestMethod()> Public Sub StaticFileWithQuery()
+        Dim doc As JObject = Ajax.MakeApiRequest("examples/eg2?name=ben&type=1", Ajax.Methods.GET)
+        Assert.AreEqual("Example JSON Document", doc("content").Value(Of String))
+    End Sub
     <TestMethod()> Public Sub StaticProcessor()
         Dim result As String = Ajax.MakeApiRequest("examples/processor", Ajax.Methods.POST, Ajax.Payload.Empty)
 

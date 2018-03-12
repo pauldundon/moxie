@@ -29,16 +29,20 @@ If you GET a collection, Moxie returns a JSON document with an array called link
 
 DELETE deletes a document, but does not remove collections.
 
+The test solution MoxieTests contains examples of how to use these methods.
+
 ### Static Documents
 
 If you want to create documents without writing POST or PUT code, you can add them to the "response" folder. When Moxie receives a GET request, it looks in the response/get folder for a JSON file. Given a request for /Customers/HighRollers/12345?name=Benjamin, Moxie will look for
 ```
-response/get/Customers/HighRollers/12345?name=Benjamin.json
+response/get/Customers/HighRollers/12345@3Fname@3DBenjamin.json
 response/get/Customers/HighRollers/12345.json
 response/get/Customers/HighRollers.json
 response/get/Customers.json
 ```
-The same goes for POST requests, except that Moxie will look for these in response/post.
+The first filename is produced by URL Encoding the querystring and replacing % with @. This is necessary to produce legal windows filenames.
+
+The same pattern applies to POST requests, except that Moxie will look for these in response/post.
 
 ###Simulating CGI-like Processors
 
