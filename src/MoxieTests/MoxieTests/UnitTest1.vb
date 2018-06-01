@@ -81,6 +81,21 @@ Imports Newtonsoft.Json.Linq
         newDoc = Ajax.MakeRequest(newPathInCollection, Ajax.Methods.GET)
         Assert.AreEqual(doc("signature"), newDoc("signature").Value(Of Integer))
     End Sub
+
+    <TestMethod()> Public Sub PostCreatesCollection2()
+        ResetDb()
+        Dim collectionPath As String = "processes"
+        Dim doc As Ajax.Payload = CreatePayload()
+        Dim newPath As String = Ajax.MakeApiRequest(collectionPath, Ajax.Methods.POST, doc)
+        Dim newDoc As JObject = Ajax.MakeRequest(newPath, Ajax.Methods.GET)
+        Assert.AreEqual(doc("signature"), newDoc("signature").Value(Of Integer))
+        Assert.IsTrue(IsExampleDocument(newDoc))
+        Dim collectionDoc As JObject = Ajax.MakeApiRequest("tests", Ajax.Methods.GET)
+        Dim newPathInCollection As String = collectionDoc("links")(0)("href").Value(Of String)
+        newDoc = Ajax.MakeRequest(newPathInCollection, Ajax.Methods.GET)
+        Assert.AreEqual(doc("signature"), newDoc("signature").Value(Of Integer))
+    End Sub
+
     <TestMethod()> Public Sub PutCreatesCollection()
         ResetDb()
         Dim docPath As String = "tests/prenamed"
@@ -114,6 +129,7 @@ Imports Newtonsoft.Json.Linq
         Assert.AreEqual(2, collectionDoc("links").Count)
 
     End Sub
+
     <TestMethod()> Public Sub PutAddsToCollection()
         ResetDb()
         Dim collectionPath As String = "tests"

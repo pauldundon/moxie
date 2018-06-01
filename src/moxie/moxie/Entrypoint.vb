@@ -26,6 +26,9 @@ Module Entrypoint
             Dim context As HttpListenerContext = listener.GetContext()
             Dim request As HttpListenerRequest = context.Request
             Dim handler As IRequestHandler = Nothing
+            context.Response.AddHeader("Access-Control-Allow-Origin", "*")
+            context.Response.AddHeader("Access-Control-Allow-Methods", "*")
+            context.Response.AddHeader("Access-Control-Allow-Headers", "*")
             Select Case request.HttpMethod
                 Case "POST"
                     handler = New PostRequestHandler(context)
@@ -38,6 +41,7 @@ Module Entrypoint
                 Case "PATCH"
                     handler = New PatchRequestHandler(context)
                 Case Else
+
                     Dim response As HttpListenerResponse = context.Response
                     Dim responseString As String = ""
                     Dim buffer As Byte() = System.Text.Encoding.UTF8.GetBytes(responseString)

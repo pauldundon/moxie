@@ -84,8 +84,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Collection](
 	[CollectionID] [int] IDENTITY(1,1) NOT NULL,
-	[Path] [varchar](256) NOT NULL,
-	[DefaultSchemaID] [int] NOT NULL,
+	[Path] [varchar](256) NOT NULL
  CONSTRAINT [PK_Collection] PRIMARY KEY CLUSTERED 
 (
 	[CollectionID] ASC
@@ -107,8 +106,7 @@ CREATE TABLE [dbo].[Document](
 	[MediaType] [varchar](50) NOT NULL,
 	[Content] [ntext] NOT NULL,
 	[Path] [varchar](265) NOT NULL,
-	[CollectionID] [int] NOT NULL,
-	[SchemaID] [int] NOT NULL,
+	[CollectionID] [int] NOT NULL
  CONSTRAINT [PK_Document] PRIMARY KEY CLUSTERED 
 (
 	[DocumentID] ASC

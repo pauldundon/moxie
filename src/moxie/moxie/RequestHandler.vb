@@ -28,7 +28,6 @@ Public MustInherit Class RequestHandler
     End Sub
     Sub PublicProcessRequest() Implements IRequestHandler.ProcessRequest
         Try
-            Context.Response.AddHeader("Access-Control-Allow-Origin", "*")
             Dim stat As JObject = StaticResponse()
 
             If stat Is Nothing Then
