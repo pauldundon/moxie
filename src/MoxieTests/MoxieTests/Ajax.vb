@@ -91,11 +91,12 @@ Public Class Ajax
         Return url
     End Function
     Public Shared Function MakeApiRequest(apiPath As String, method As Methods,
-                                   payload As Payload) As Object
-        Return MakeApiRequest(apiPath, method, payload.ToString)
+                                   payload As Payload, Optional headers As IEnumerable(Of String) = Nothing) As Object
+        Return MakeApiRequest(apiPath, method, payload.ToString, headers)
     End Function
     Public Shared Function MakeApiRequest(apiPath As String, method As Methods,
-                                   Optional payload As String = "") As Object
+                                   Optional payload As String = "",
+                                          Optional headers As IEnumerable(Of String) = Nothing) As Object
 #If LOG_PAYLOADS Then
 
         Dim logFile As String = apiPath
@@ -113,7 +114,7 @@ Public Class Ajax
 #End If
 
         Dim url As String = Server + apiPath
-        Dim result As Object = MakeRequest(url, method, payload)
+        Dim result As Object = MakeRequest(url, method, payload, headers)
 #If LOG_PAYLOADS Then
 
         Using sw As New StreamWriter(logFile)
@@ -133,11 +134,12 @@ Public Class Ajax
         Return result
     End Function
     Public Shared Function MakeRequest(url As String, method As Methods,
-                                       payload As Payload) As Object
-        Return MakeRequest(url, method, payload.ToString)
+                                       payload As Payload, Optional headers As IEnumerable(Of String) = Nothing) As Object
+        Return MakeRequest(url, method, payload.ToString, headers)
     End Function
     Public Shared Function MakeRequest(url As String, method As Methods,
-                                       Optional payload As String = "") As Object
+                                       Optional payload As String = "",
+                                       Optional headers As IEnumerable(Of String) = Nothing) As Object
 
         RequestCount += 1
         LastErrorResponseContent = ""
@@ -185,6 +187,12 @@ Public Class Ajax
         If ApiDb <> "" Then
             req.Headers.Add("API-Database:" & ApiDb)
         End If
+        If Not headers Is Nothing Then
+            For Each item As String In headers
+                req.Headers.Add(item)
+            Next
+        End If
+
         req.Timeout = 240000
         Dim t As DateTime = Now
 

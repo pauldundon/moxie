@@ -45,6 +45,17 @@ Imports Newtonsoft.Json.Linq
         Assert.AreEqual(doc("signature"), newDoc("signature").Value(Of Integer))
         Assert.IsTrue(IsExampleDocument(newDoc))
     End Sub
+    <TestMethod()> Public Sub PostAndGetWithID()
+        ResetDb()
+        Dim collectionPath As String = "tests"
+        Dim doc As Ajax.Payload = CreatePayload()
+        Dim idHeader = "Register-ID:DocumentID"
+        Dim newPath As String = Ajax.MakeApiRequest(collectionPath, Ajax.Methods.POST, doc, {idHeader})
+        Dim newDoc As JObject = Ajax.MakeRequest(newPath, Ajax.Methods.GET)
+        Assert.AreEqual(doc("signature"), newDoc("signature").Value(Of Integer))
+        Assert.AreEqual(newPath, newDoc("DocumentID").Value(Of String))
+        Assert.IsTrue(IsExampleDocument(newDoc))
+    End Sub
     <TestMethod()> Public Sub PutAndGet()
         ResetDb()
         Dim docPath As String = "tests/prenamed"

@@ -63,7 +63,10 @@ Public MustInherit Class RequestHandler
         Dim requestUrl As Uri = Context.Request.Url
         Return requestUrl.AbsoluteUri.Substring(0, requestUrl.AbsoluteUri.Length - requestUrl.PathAndQuery.Length) & path
     End Function
+    Protected Function RequestHeaders() As Specialized.NameValueCollection
+        Return Context.Request.Headers
 
+    End Function
     Protected Function RequestContent() As String
         Dim sr As New StreamReader(Context.Request.InputStream)
         Dim content As String = sr.ReadToEnd
